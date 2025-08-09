@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ffc6838d-def2-4d01-9168-79a358875d4d",
-		"name": "My-F5",
+		"name": "Bakwas_Cloud_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "27674399"
 	},
@@ -17,7 +17,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/api/ping"
+						"url": "{{baseURL}}/api/ping"
 					},
 					"response": []
 				},
@@ -38,72 +38,84 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/login"
+						"url": "{{baseURL}}/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/api/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"demo@example.com\",\n    \"password\":\"password\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/api/secret/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Infra",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/api/infrastructures"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Infra",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"s3\",\n    \"type\":\"storage\",\n    \"details\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/api/infrastructure"
 					},
 					"response": []
 				}
 			]
-		},
+		}
+	],
+	"variable": [
 		{
-			"name": "Dummy API on image",
-			"item": [
-				{
-					"name": "Ping One",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Ping Two",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8090/dummy/api/two"
-					},
-					"response": []
-				},
-				{
-					"name": "Ping Increment",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"url": "http://localhost:8090/dummy/api/increment"
-					},
-					"response": []
-				},
-				{
-					"name": "Ping Decrement",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"url": "http://localhost:8090/dummy/api/decrement"
-					},
-					"response": []
-				},
-				{
-					"name": "Ping Increment/Decrement Value",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8090/dummy/api/value"
-					},
-					"response": []
-				}
-			]
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
 		}
 	]
 }
