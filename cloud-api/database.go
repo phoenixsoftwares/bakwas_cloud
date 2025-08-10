@@ -10,7 +10,7 @@ type User struct {
 type Infrastructure struct {
 	Name    string
 	Type    string
-	Details string
+	Details map[string]interface{}
 }
 
 type Database struct {
@@ -55,7 +55,7 @@ func (db *Database) GetAllUsers() []*User {
 	return db.Users
 }
 
-func (db *Database) AddInfrastructure(name, typ, details string) *Infrastructure {
+func (db *Database) AddInfrastructure(name string, typ string, details map[string]interface{}) *Infrastructure {
 	infrastructure := &Infrastructure{
 		Name:    name,
 		Type:    typ,
@@ -88,7 +88,7 @@ func (db *Database) DeleteInfrastructure(name string) error {
 	return fmt.Errorf("Infrastructure not found")
 }
 
-func (db *Database) UpdateInfrastructure(name, typ, details string) *Infrastructure {
+func (db *Database) UpdateInfrastructure(name string, typ string, details map[string]interface{}) *Infrastructure {
 	infra := db.GetInfrastructure(name)
 	if infra != nil {
 		infra.Type = typ

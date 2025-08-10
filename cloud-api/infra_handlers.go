@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
+	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
 func getAllInfrastructuresHandler(c *gin.Context) {
@@ -12,17 +12,22 @@ func getAllInfrastructuresHandler(c *gin.Context) {
 }
 
 func setInfrastructuresHandler(c *gin.Context) {
-	name := uuid.New()
+	// id := uuid.New()
+	name, err := gonanoid.New()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate infrastructure name"})
+		return
+	}
 	var req struct {
 		// Name    string `json:"name"`
-		Type    string `json:"type"`
-		Details string `json:"details"`
+		Type    string                 `json:"type"`
+		Details map[string]interface{} `json:"details"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request", "message": err})
 		return
 	}
-	newInfra := db.AddInfrastructure(req.Type+"-"+name.String(), req.Type, req.Details)
+	newInfra := db.AddInfrastructure(req.Type+"-"+name, req.Type, req.Details)
 	c.JSON(http.StatusOK, gin.H{"message": "Infrastructure added successfully", "infrastructure": newInfra})
 }
 
@@ -61,9 +66,9 @@ func deleteInfrastructuresHandler(c *gin.Context) {
 
 func updateInfrastructuresHandler(c *gin.Context) {
 	var req struct {
-		Name    string `json:"name"`
-		Type    string `json:"type"`
-		Details string `json:"details"`
+		Name    string                 `json:"name"`
+		Type    string                 `json:"type"`
+		Details map[string]interface{} `json:"details"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
