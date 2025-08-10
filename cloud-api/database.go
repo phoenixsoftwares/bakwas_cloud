@@ -78,13 +78,14 @@ func (db *Database) GetInfrastructure(name string) *Infrastructure {
 	return nil
 }
 
-func (db *Database) DeleteInfrastructure(name string) {
+func (db *Database) DeleteInfrastructure(name string) error {
 	for i, infra := range db.Infrastructures {
 		if infra.Name == name {
 			db.Infrastructures = append(db.Infrastructures[:i], db.Infrastructures[i+1:]...)
-			return
+			return nil
 		}
 	}
+	return fmt.Errorf("Infrastructure not found")
 }
 
 func (db *Database) UpdateInfrastructure(name, typ, details string) *Infrastructure {
